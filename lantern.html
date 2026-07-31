@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Lantern Festival 🏮</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-dark: #070511;
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-dark);
+    font-family: 'Fredoka', sans-serif;
+    overflow: hidden;
+  }
+
+  /* Night Sky */
+  .night-sky {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, #03010b 0%, #151036 50%, #2a1b42 100%);
+    z-index: 1;
+  }
+
+  .moon {
+    position: absolute;
+    top: 10%;
+    right: 15%;
+    font-size: 8rem;
+    filter: drop-shadow(0 0 40px rgba(255, 248, 220, 0.6));
+    z-index: 2;
+    animation: moonFloat 10s ease-in-out infinite alternate;
+  }
+
+  @keyframes moonFloat {
+    from { transform: translateY(0); }
+    to { transform: translateY(-20px); }
+  }
+
+  /* Canvas */
+  #lanternCanvas {
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+
+  /* Replay UI */
+  .ui-container {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    text-align: center;
+    opacity: 0;
+    animation: fadeIn 2s ease forwards 5s; /* Appears after 5 seconds */
+  }
+
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+
+  /* Premium Button */
+  .glow-button {
+    padding: 1rem 2.5rem;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #4A2F00;
+    background: linear-gradient(135deg, #FFE885 0%, #FFD54F 50%, #FFB7C5 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(255, 213, 79, 0.4), inset 0 -3px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .glow-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(255, 213, 79, 0.6), inset 0 -3px 8px rgba(0,0,0,0.1);
+  }
+
+  #fade-black-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 99999;
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity 2s ease-in-out;
+  }
+</style>
+</head>
+<body>
+
+<div id="fade-black-overlay"></div>
+<div class="night-sky"></div>
+<div class="moon">🌙</div>
+
+<canvas id="lanternCanvas"></canvas>
+
+<div class="ui-container">
+  <button class="glow-button" id="replayBtn">🌿 Replay Adventure</button>
+</div>
+
+<script src="js/config.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+      document.getElementById("fade-black-overlay").style.opacity = "0";
+    }, 100);
+
+    // Replay logic
+    document.getElementById("replayBtn").addEventListener("click", () => {
+      const overlay = document.getElementById("fade-black-overlay");
+      overlay.style.pointerEvents = "all";
+      overlay.style.opacity = "1";
+      setTimeout(() => {
+        window.location.href = "loading.html";
+      }, 2000);
+    });
+
+    // Lantern Engine
+    const canvas = document.getElementById("lanternCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let width, height;
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resize);
+    resize();
+
+    const lanterns = [];
+    const stars = [];
+    const numLanterns = CONFIG.lanternCount || 80;
+
+    // Init Stars
+    for(let i=0; i<150; i++) {
+      stars.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 1.5,
+        alpha: Math.random(),
+        speed: Math.random() * 0.02
+      });
+    }
+
+    // Init Lanterns
+    for(let i=0; i<numLanterns; i++) {
+      lanterns.push({
+        x: Math.random() * width,
+        y: height + Math.random() * 500, // start below
+        s: Math.random() * 0.6 + 0.3, // scale
+        vy: -(Math.random() * 1.5 + 0.5), // speed up
+        vx: Math.random() * 1 - 0.5,
+        wobble: Math.random() * Math.PI * 2,
+        wobbleSpeed: Math.random() * 0.05 + 0.02
+      });
+    }
+
+    function drawLantern(l) {
+      ctx.save();
+      ctx.translate(l.x, l.y);
+      ctx.scale(l.s, l.s);
+      
+      // Glow
+      ctx.beginPath();
+      const grad = ctx.createRadialGradient(0, 0, 0, 0, 0, 30);
+      grad.addColorStop(0, "rgba(255, 213, 79, 0.8)");
+      grad.addColorStop(1, "rgba(255, 100, 0, 0)");
+      ctx.fillStyle = grad;
+      ctx.arc(0, 0, 40, 0, Math.PI*2);
+      ctx.fill();
+
+      // Paper
+      ctx.fillStyle = "rgba(255, 230, 150, 0.9)";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 15, 20, 0, 0, Math.PI*2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, width, height);
+
+      // Draw Stars
+      stars.forEach(s => {
+        s.alpha += s.speed;
+        if(s.alpha > 1 || s.alpha < 0) s.speed = -s.speed;
+        ctx.fillStyle = `rgba(255, 255, 255, ${s.alpha})`;
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+        ctx.fill();
+      });
+
+      // Draw Lanterns
+      lanterns.forEach(l => {
+        l.wobble += l.wobbleSpeed;
+        l.x += l.vx + Math.sin(l.wobble) * 0.5;
+        l.y += l.vy;
+
+        if (l.y < -100) {
+          l.y = height + 100;
+          l.x = Math.random() * width;
+        }
+
+        drawLantern(l);
+      });
+
+      requestAnimationFrame(loop);
+    }
+    loop();
+  });
+</script>
+
+</body>
+</html>

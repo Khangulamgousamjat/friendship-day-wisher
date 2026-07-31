@@ -1,39 +1,14 @@
 /**
- * Friendship Day Experience - Main Orchestrator
- * Manages preloader sequence, typewriter text, continue buttons, audio controls, and replay.
+ * Main Orchestrator — Panda World Focus
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Instantiate Controllers
   window.pandaInstance = new PandaController();
-  window.towerInstance = new TowerController();
 
-  // 2. Apply CONFIG to Final Letter Card
-  applyConfigToFinalLetter();
-
-  // 3. Setup Mouse Parallax for Environment Depth
   initMouseParallax();
-
-  // 4. Audio Controller Binding
   initAudioControls();
-
-  // 5. Preloader Timeline & Sequence Orchestration
   initPreloaderSequence(window.pandaInstance);
-
-  // 6. Bind All Scene Continue Buttons
-  initSceneContinueButtons();
-
-  // 7. Replay Adventure Button Binding
-  initReplayButton();
 });
-
-function applyConfigToFinalLetter() {
-  const titleEl = document.getElementById("ui-final-title");
-  const msgEl = document.getElementById("ui-final-message");
-
-  if (titleEl) titleEl.textContent = CONFIG.finalTitle || "Happy Friendship Day ❤️";
-  if (msgEl) msgEl.textContent = CONFIG.finalMessage || "Thank you for being one of my favorite people.";
-}
 
 function runTypewriter(elementId, text, speed = 35, callback) {
   const container = document.getElementById(elementId);
@@ -97,18 +72,11 @@ function initPreloaderSequence(panda) {
   const loader = document.getElementById("loading");
   const pandaWorld = document.getElementById("panda-world");
   const ctaBtn = document.getElementById("startAdventure");
-  const continueBtn = document.getElementById("continue-tower-btn");
-  const fadeOverlay = document.getElementById("fade-black-overlay");
 
   if (ctaBtn) {
     ctaBtn.textContent = CONFIG.pandaButton || "Let's Go Together";
   }
 
-  if (continueBtn) {
-    continueBtn.textContent = CONFIG.continueButtonText || "Continue the Adventure 🏰";
-  }
-
-  // Preloader fill timeline (~2.5s)
   setTimeout(() => {
     if (typeof gsap !== "undefined" && loader) {
       gsap.to(loader, {
@@ -129,69 +97,11 @@ function initPreloaderSequence(panda) {
     }
   }, 2500);
 
-  // Panda CTA Click -> Scroll to Forest
   if (ctaBtn) {
     ctaBtn.addEventListener("click", () => {
       if (typeof soundManager !== "undefined") {
         soundManager.startMusic();
         soundManager.playSparkleSFX();
-      }
-
-      panda.startAdventureTransition(() => {
-        if (typeof scrollController !== "undefined") {
-          scrollController.scrollTo("#scene-forest", { duration: 1.8 });
-        }
-      });
-    });
-  }
-
-  // Tower Reveal Continue Button -> Fade Screen to Black & Start Tower
-  if (continueBtn) {
-    continueBtn.addEventListener("click", () => {
-      if (typeof soundManager !== "undefined") soundManager.playSparkleSFX();
-
-      if (fadeOverlay) {
-        fadeOverlay.style.opacity = "1";
-        setTimeout(() => {
-          if (typeof scrollController !== "undefined") {
-            scrollController.scrollTo("#section-tower", { duration: 0.1 });
-          }
-          setTimeout(() => {
-            fadeOverlay.style.opacity = "0";
-          }, 300);
-        }, 800);
-      } else {
-        if (typeof scrollController !== "undefined") {
-          scrollController.scrollTo("#section-tower", { duration: 1.8 });
-        }
-      }
-    });
-  }
-}
-
-// Bind all scene Continue buttons to scroll smoothly to their target
-function initSceneContinueButtons() {
-  const buttons = document.querySelectorAll(".scene-continue-btn");
-  buttons.forEach(btn => {
-    const target = btn.getAttribute("data-target");
-    if (!target) return;
-
-    btn.addEventListener("click", () => {
-      if (typeof soundManager !== "undefined") soundManager.playSparkleSFX();
-      if (typeof scrollController !== "undefined") {
-        scrollController.scrollTo(target, { duration: 1.8 });
-      }
-    });
-  });
-}
-
-function initReplayButton() {
-  const replayBtn = document.getElementById("replay-adventure-btn");
-  if (replayBtn) {
-    replayBtn.addEventListener("click", () => {
-      if (typeof soundManager !== "undefined") soundManager.playSparkleSFX();
-      if (typeof scrollController !== "undefined") {
-        scrollController.scrollTo(0, { duration: 1.5 });
       }
     });
   }

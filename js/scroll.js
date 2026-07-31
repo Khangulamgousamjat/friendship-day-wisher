@@ -1,7 +1,5 @@
 /**
- * Friendship Day Experience - Camera Climb & Message Reveal Integration
- * Manages scroll climb starting at the BOTTOM of the 3500px tower, translating upward as user scrolls down.
- * Enforces strictly ONE tower message visible at a time, and sequential finale memory card reveals.
+ * Lenis & Scroll Integration Reset — Awaiting new tower implementation
  */
 
 class ScrollController {
@@ -33,8 +31,6 @@ class ScrollController {
         requestAnimationFrame(raf);
       }
     }
-
-    this.setupScrollTriggers();
   }
 
   scrollTo(target, options = {}) {
@@ -43,160 +39,6 @@ class ScrollController {
     } else {
       const el = typeof target === "string" ? document.querySelector(target) : target;
       if (el) el.scrollIntoView({ behavior: "smooth" });
-    }
-  }
-
-  setupScrollTriggers() {
-    if (typeof ScrollTrigger === "undefined") return;
-
-    const skyBg = document.getElementById("sky-sweep-bg");
-    const fillBar = document.getElementById("bamboo-nav-fill");
-
-    // 1. Overall Progress & Background Sky Sweep
-    ScrollTrigger.create({
-      trigger: "body",
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 0.5,
-      onUpdate: (self) => {
-        const p = self.progress;
-        if (fillBar) fillBar.style.height = `${p * 100}%`;
-
-        if (skyBg) {
-          if (p < 0.15) {
-            skyBg.style.background = "linear-gradient(180deg, #BEE9FF 0%, #FFF8F0 100%)";
-          } else if (p < 0.35) {
-            skyBg.style.background = "linear-gradient(180deg, #C8F0C4 0%, #FFF9EF 100%)";
-          } else if (p < 0.55) {
-            skyBg.style.background = "linear-gradient(180deg, #FFD86B 0%, #FFF8F0 100%)";
-          } else if (p < 0.75) {
-            skyBg.style.background = "linear-gradient(180deg, #FF9E5E 0%, #FF758F 100%)";
-          } else {
-            skyBg.style.background = "linear-gradient(180deg, #0F0A1E 0%, #1E1B4B 100%)";
-          }
-        }
-      }
-    });
-
-    // 2. Camera Climb: Starts at BOTTOM of tower, translates UP as user scrolls DOWN
-    const cameraWorld = document.getElementById("tower-camera-world");
-    ScrollTrigger.create({
-      trigger: "#section-tower",
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 1,
-      onUpdate: (self) => {
-        const p = self.progress;
-
-        if (cameraWorld) {
-          const maxTranslate = 2700; // Translates 2700px upward along 3500px tower
-          gsap.set(cameraWorld, { y: p * maxTranslate });
-        }
-
-        // At 100% summit, reveal Girl on balcony
-        if (p > 0.90 && window.towerInstance) {
-          window.towerInstance.revealGirlAtSummit();
-        }
-      }
-    });
-
-    // 3. 5 Message Cards Reveal Ranges (STRICTLY ONE VISIBLE AT A TIME)
-    const msgRanges = [
-      { start: 0.12, end: 0.26 }, // Message 1 (15%)
-      { start: 0.27, end: 0.42 }, // Message 2 (30%)
-      { start: 0.43, end: 0.57 }, // Message 3 (45%)
-      { start: 0.58, end: 0.73 }, // Message 4 (60%)
-      { start: 0.74, end: 0.89 }  // Message 5 (80%)
-    ];
-
-    ScrollTrigger.create({
-      trigger: "#section-tower",
-      start: "top top",
-      end: "bottom bottom",
-      onUpdate: (self) => {
-        const p = self.progress;
-
-        let activeIdx = -1;
-        msgRanges.forEach((range, i) => {
-          if (p >= range.start && p < range.end) {
-            activeIdx = i;
-          }
-        });
-
-        for (let i = 0; i < 5; i++) {
-          const card = document.getElementById(`tower-card-${i}`);
-          if (!card) continue;
-
-          if (i === activeIdx) {
-            if (!card.classList.contains("visible")) {
-              card.classList.add("visible");
-              if (typeof soundManager !== "undefined") soundManager.playSparkleSFX();
-            }
-          } else {
-            card.classList.remove("visible");
-          }
-        }
-      }
-    });
-
-    // 4. Finale Lantern Festival Trigger: Sequential Memory Card Reveals (One by One)
-    ScrollTrigger.create({
-      trigger: "#section-lantern-festival",
-      start: "top center",
-      onEnter: () => {
-        if (window.lanternEngine) window.lanternEngine.startFestival();
-        if (typeof soundManager !== "undefined") soundManager.setEnvironment("finale");
-
-        const m1 = document.querySelector(".memory-card.m1");
-        const m2 = document.querySelector(".memory-card.m2");
-        const m3 = document.querySelector(".memory-card.m3");
-        const replayBtn = document.getElementById("replay-adventure-btn");
-
-        // Sequential one-by-one reveals with 2.2s delays
-        setTimeout(() => m1 && m1.classList.add("visible"), 800);
-        setTimeout(() => m2 && m2.classList.add("visible"), 3000);
-        setTimeout(() => m3 && m3.classList.add("visible"), 5200);
-        setTimeout(() => replayBtn && replayBtn.classList.add("visible"), 7400);
-      }
-    });
-
-    // Environmental Checkpoints
-    const checkEnvironment = (env, selector, nodeIndex) => {
-      ScrollTrigger.create({
-        trigger: selector,
-        start: "top center",
-        end: "bottom center",
-        onEnter: () => this.applyEnvironment(env, nodeIndex),
-        onEnterBack: () => this.applyEnvironment(env, nodeIndex)
-      });
-    };
-
-    checkEnvironment("forest", "#scene-forest", 0);
-    checkEnvironment("garden", "#scene-garden", 1);
-    checkEnvironment("bridge", "#scene-bridge", 2);
-    checkEnvironment("meadow", "#scene-meadow", 3);
-    checkEnvironment("cloud", "#scene-cloud", 4);
-    checkEnvironment("tower", "#section-tower", 5);
-    checkEnvironment("finale", "#section-lantern-festival", 6);
-  }
-
-  applyEnvironment(env, nodeIndex) {
-    const nodes = document.querySelectorAll(".bamboo-nav-node");
-    nodes.forEach((n, idx) => {
-      if (idx === nodeIndex) n.classList.add("active");
-      else n.classList.remove("active");
-    });
-
-    if (window.particleEngine) window.particleEngine.setEnvironment(env);
-    if (typeof soundManager !== "undefined") soundManager.setEnvironment(env);
-
-    if (window.pandaInstance) {
-      if (env === "tower" || env === "finale") {
-        window.pandaInstance.sitDown();
-      } else {
-        window.pandaInstance.startWalkCycle();
-        window.pandaInstance.setReaction(env);
-      }
     }
   }
 }

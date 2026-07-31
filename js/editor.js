@@ -46,6 +46,7 @@ function populateFormFields() {
 
   setVal("finalTitle", CONFIG.finalTitle);
   setVal("finalMessage", CONFIG.finalMessage);
+  setVal("shayariText", CONFIG.shayariText);
   setVal("themeSelect", CONFIG.theme || "golden");
 
   const musicChk = document.getElementById("music");
@@ -89,6 +90,7 @@ function handleSave(e) {
 
     finalTitle: getVal("finalTitle"),
     finalMessage: getVal("finalMessage"),
+    shayariText: getVal("shayariText"),
     theme: getVal("themeSelect"),
     music: document.getElementById("music") ? document.getElementById("music").checked : true,
     lanternCount: parseInt(getVal("lanternCount")) || 120
@@ -156,7 +158,7 @@ function openPreviewModal(e) {
   const modal = document.getElementById("preview-modal");
   const iframe = document.getElementById("preview-iframe");
   if (modal && iframe) {
-    iframe.src = "index.html?t=" + Date.now();
+    iframe.src = "loading.html?t=" + Date.now();
     modal.classList.add("open");
   }
 }

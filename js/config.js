@@ -26,8 +26,12 @@ const DEFAULT_CONFIG = {
 
   finalTitle: "Happy Friendship Day ❤️",
   finalMessage: "Thank you for being one of my favorite people. Every moment spent together is a gift, and I am so grateful to have you in my life.",
+  shayariText: "Dosti sirf ek rishta nahi,\nZindagi ki sabse khoobsurat yaad hoti hai.\nHar muskaan mein tera hissa rahe,\nHar dua mein tera naam rahe.",
 
-  towerImage: "assets/images/tower.svg",
+  // Assets (Redesign paths)
+  towerImage: "assets/images/tower.png",
+  jungleImage: "assets/images/jungle-background.png",
+  waterfallImage: "assets/images/waterfall.png",
   girlImage: "assets/images/girl.svg",
   hairImage: "assets/images/hair.svg",
   backgroundImage: "assets/images/mountains.svg",

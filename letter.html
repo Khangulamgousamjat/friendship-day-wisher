@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Final Letter 💌</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amita:wght@400;700&family=Fredoka:wght@400;500;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg-dark: #121016;
+  }
+  
+  body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg-dark);
+    font-family: 'Fredoka', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  /* Magical Background */
+  .letter-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #FFB7C5 0%, #FFD54F 50%, #FF9E00 100%);
+    opacity: 0.2;
+    z-index: 1;
+  }
+  
+  .sparkles {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(2px 2px at 20px 30px, #FFD54F, rgba(0,0,0,0)), radial-gradient(2px 2px at 140px 170px, #FFF, rgba(0,0,0,0));
+    background-size: 200px 200px;
+    opacity: 0.8;
+    z-index: 2;
+    animation: sparkleMove 10s linear infinite;
+  }
+
+  @keyframes sparkleMove {
+    from { background-position: 0 0; }
+    to { background-position: -200px -200px; }
+  }
+
+  /* The Glass Letter Card */
+  .letter-card {
+    position: relative;
+    z-index: 10;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 30px;
+    padding: 3.5rem 4rem;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4), inset 0 0 30px rgba(255,255,255,0.2);
+    color: #FFFDF8;
+    text-align: center;
+    max-width: 700px;
+    width: 90%;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: slideUpFadeIn 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.5s;
+  }
+
+  @keyframes slideUpFadeIn {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .letter-card h1 {
+    font-size: 2.8rem;
+    margin: 0 0 1rem 0;
+    font-family: 'Quicksand', sans-serif;
+    color: #FFD54F;
+    text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+
+  .letter-card .main-message {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    font-weight: 500;
+  }
+
+  /* Shayari Styling */
+  .shayari {
+    font-family: 'Amita', cursive; /* A nice font for Hindi/Urdu */
+    font-size: 1.4rem;
+    line-height: 1.8;
+    color: #FFB7C5;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: rgba(0,0,0,0.15);
+    border-radius: 15px;
+    border-left: 4px solid #FFD54F;
+    text-align: left;
+    white-space: pre-line;
+  }
+
+  .happy-text {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    background: linear-gradient(90deg, #FFB7C5, #FFD54F, #FFB7C5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: shineText 4s linear infinite;
+  }
+
+  @keyframes shineText {
+    to { background-position: 200% center; }
+  }
+
+  /* Premium Button */
+  .glow-button {
+    padding: 1rem 2.5rem;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #4A2F00;
+    background: linear-gradient(135deg, #FFE885 0%, #FFD54F 50%, #FFB7C5 100%);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(255, 213, 79, 0.4), inset 0 -3px 8px rgba(0,0,0,0.1);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .glow-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(255, 213, 79, 0.6), inset 0 -3px 8px rgba(0,0,0,0.1);
+  }
+
+  #fade-black-overlay {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 99999;
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity 1.5s ease-in-out;
+  }
+</style>
+</head>
+<body>
+
+<div id="fade-black-overlay"></div>
+<div class="letter-bg"></div>
+<div class="sparkles"></div>
+
+<div class="letter-card">
+  <h1 id="titleText">To My Dearest Friend</h1>
+  <p class="main-message" id="messageText">Thank you for being one of my favorite people. Every moment spent together is a gift, and I am so grateful to have you in my life.</p>
+  
+  <div class="shayari" id="shayariText">"Dosti sirf ek rishta nahi,
+Zindagi ki sabse khoobsurat yaad hoti hai.
+Har muskaan mein tera hissa rahe,
+Har dua mein tera naam rahe."</div>
+
+  <div class="happy-text">Happy Friendship Day ❤️</div>
+
+  <button class="glow-button" id="lanternBtn">Experience Lantern Festival 🏮</button>
+</div>
+
+<script src="js/config.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    setTimeout(() => {
+      document.getElementById("fade-black-overlay").style.opacity = "0";
+    }, 100);
+
+    // Apply Config
+    if (CONFIG.finalTitle) document.getElementById("titleText").textContent = CONFIG.finalTitle;
+    if (CONFIG.finalMessage) document.getElementById("messageText").textContent = CONFIG.finalMessage;
+    if (CONFIG.shayariText) document.getElementById("shayariText").textContent = CONFIG.shayariText;
+
+    document.getElementById("lanternBtn").addEventListener("click", () => {
+      const overlay = document.getElementById("fade-black-overlay");
+      overlay.style.pointerEvents = "all";
+      overlay.style.opacity = "1";
+      setTimeout(() => {
+        window.location.href = "lantern.html";
+      }, 1500);
+    });
+  });
+</script>
+
+</body>
+</html>
