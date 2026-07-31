@@ -15,7 +15,7 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-  let filePath = path.join(__dirname, req.url === '/' ? 'index.html' : req.url.split('?')[0]);
+  let filePath = path.join(__dirname, req.url === '/' ? 'loading.html' : req.url.split('?')[0]);
   
   fs.readFile(filePath, (err, content) => {
     if (err) {

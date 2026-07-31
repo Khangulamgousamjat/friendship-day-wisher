@@ -53,25 +53,23 @@
     100% { opacity: 1; }
   }
 
-  /* The Scroll Container (5000px height) */
+  /* The Scroll Container (Determined by Tower Image Height) */
   .tower-world {
     position: relative;
     width: 100%;
-    height: 6000px; /* Large scrolling height */
     z-index: 2;
+    display: flex;
+    justify-content: center;
   }
 
   /* The Tower Image */
-  .tower-image-wrapper {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
+  .tower-img {
     width: 100%;
     max-width: 1200px;
-    height: 6000px;
-    background: url('assets/images/tower.png') bottom center/contain no-repeat;
-    /* If tower.png is missing or small, fallback to a CSS tower shape */
+    height: auto;
+    object-fit: contain;
+    object-position: bottom;
+    display: block;
     pointer-events: none;
   }
 
@@ -81,8 +79,8 @@
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 300px;
-    background: linear-gradient(to top, #0f3d0f, transparent);
+    height: 400px;
+    background: url('assets/images/river.png') center/cover no-repeat, linear-gradient(to top, #0f3d0f 20%, transparent);
     z-index: 3;
   }
 
@@ -175,29 +173,23 @@
     opacity: 1;
   }
 
-  /* CSS Fallback Girl if girl image is missing */
+  /* SVG Fallback Girl */
   .css-girl {
-    width: 60px;
-    height: 120px;
-    background: #FFB7C5;
-    border-radius: 30px 30px 0 0;
+    width: 140px;
     position: absolute;
-    bottom: 0;
-    left: 120px;
-    box-shadow: 0 0 30px #FFD54F;
+    bottom: -10px;
+    left: 80px;
+    filter: drop-shadow(0 0 10px rgba(255, 213, 79, 0.5));
   }
 
   .css-hair {
     position: absolute;
-    top: 20px;
-    left: 30px;
-    width: 20px;
+    top: 50px;
+    left: 100px;
+    width: 60px;
     height: 3000px; /* Flowing down */
-    background: linear-gradient(to bottom, #FFF8D6, #FFD54F, #FF9E00);
-    border-radius: 10px;
-    filter: drop-shadow(0 0 10px #FFD54F);
-    animation: hairSway 5s ease-in-out infinite alternate;
     transform-origin: top center;
+    animation: hairSway 5s ease-in-out infinite alternate;
   }
 
   @keyframes hairSway {
@@ -237,12 +229,8 @@
 
 <!-- Tower World (Scrollable content) -->
 <div class="tower-world" id="towerWorld">
-  <div class="tower-image-wrapper">
-    <!-- Balcony Girl at top -->
-    <div class="top-balcony-girl" id="balconyGirl">
-      <div class="css-hair"></div>
-      <div class="css-girl"></div>
-    </div>
+  <div style="position:relative; width:100%; max-width:1200px; display:flex; justify-content:center;">
+    <img src="assets/images/tower.png" class="tower-img" id="mainTowerImage" alt="Tall Magical Tower">
   </div>
   <div class="ground-elements"></div>
 </div>
@@ -264,11 +252,11 @@
     }, 100);
 
     // 2. Setup Scroll Positions & Messages
-    const totalHeight = 6000;
-    const viewportHeight = window.innerHeight;
-    
-    // Start at bottom
-    window.scrollTo(0, totalHeight);
+    window.addEventListener("load", () => {
+      const totalHeight = document.body.scrollHeight;
+      
+      // Start at bottom
+      window.scrollTo(0, totalHeight);
 
     const messages = CONFIG.towerMessages || [
       "Some friendships begin quietly.",
@@ -279,15 +267,13 @@
     ];
 
     // Scroll checkpoints (bottom to top)
-    // 0 is top, totalHeight is bottom.
-    // We want to trigger when scrolling UP (y decreases)
-    // 5 messages -> 5 stops
+    const step = (totalHeight - window.innerHeight) / 6;
     const stops = [
-      totalHeight - 1000,
-      totalHeight - 2000,
-      totalHeight - 3000,
-      totalHeight - 4000,
-      totalHeight - 5000
+      totalHeight - step * 1,
+      totalHeight - step * 2,
+      totalHeight - step * 3,
+      totalHeight - step * 4,
+      totalHeight - step * 5
     ];
 
     let currentStopIndex = 0;
@@ -334,8 +320,7 @@
     }
 
     function revealSummit() {
-      document.getElementById("balconyGirl").classList.add("revealed");
-      // Auto scroll to very top
+      // Prevent over-scrolling past the top
       window.scrollTo({ top: 0, behavior: "smooth" });
 
       setTimeout(() => {
@@ -372,6 +357,7 @@
         lockScroll(currentStopIndex);
       }
     });
+    }); // End window load event
 
   });
 </script>
