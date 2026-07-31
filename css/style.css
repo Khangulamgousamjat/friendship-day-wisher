@@ -1,0 +1,257 @@
+/* ==========================================================================
+   FRIENDSHIP DAY INTERACTIVE STORYTELLING EXPERIENCE
+   Global Styles, Bamboo Progress Stalk & Environment Scenes (Phase 3)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Quicksand:wght@500;600;700&display=swap');
+
+:root {
+  --bg: #FFF8F0;
+  --cream: #FFF6E8;
+  --pink: #FFD9E8;
+  --lavender: #DCCBFF;
+  --gold: #FFD86B;
+  --sky: #BEE9FF;
+  --green: #C8F0C4;
+  --text: #473A3A;
+
+  --font-heading: 'Fredoka', cursive, sans-serif;
+  --font-subheading: 'Quicksand', sans-serif;
+  --font-body: 'Nunito', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--text);
+  background-color: var(--bg);
+  overflow-x: hidden;
+}
+
+body {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* Sky Background Sweep (Scroll-linked Gradient) */
+.sky-sweep {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, #BEE9FF 0%, #FFF8F0 100%);
+  transition: background 0.8s ease;
+  pointer-events: none;
+}
+
+/* Floating Music Controller Button */
+.music-toggle-container {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 9000;
+}
+
+.music-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+}
+
+.music-btn:hover {
+  transform: scale(1.1);
+}
+
+/* Vertical Bamboo Progress Stalk */
+.bamboo-nav {
+  position: fixed;
+  left: 2rem;
+  top: 25%;
+  bottom: 25%;
+  width: 8px;
+  background: rgba(200, 240, 196, 0.4);
+  border-radius: 6px;
+  z-index: 8000;
+  pointer-events: none;
+}
+
+.bamboo-nav-fill {
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, #68C380 0%, #FFD86B 100%);
+  border-radius: 6px;
+  transition: height 0.1s linear;
+}
+
+.bamboo-nav-node {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.1rem;
+  opacity: 0.4;
+  transition: all 0.4s ease;
+}
+
+.bamboo-nav-node.active {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.4);
+}
+
+.node-1 { top: 0%; }
+.node-2 { top: 20%; }
+.node-3 { top: 40%; }
+.node-4 { top: 60%; }
+.node-5 { top: 80%; }
+.node-6 { top: 100%; }
+
+/* Glassmorphism System Cards */
+.glass-card {
+  background: rgba(255, 255, 255, 0.82);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 15px 35px rgba(71, 58, 58, 0.08);
+  border-radius: 28px;
+  padding: 2.0rem 2.6rem;
+  position: relative;
+}
+
+/* Environment Scenes Layout (~100vh each) */
+.adventure-scene {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+}
+
+.mini-message-card {
+  text-align: center;
+  max-width: 460px;
+  width: 90%;
+  animation: floatSine 4s ease-in-out infinite;
+}
+
+.mini-msg-text {
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1.35rem;
+  line-height: 1.7;
+  color: #443838;
+}
+
+/* Scene 2: Rotating Flowers */
+.rotating-flower {
+  position: absolute;
+  font-size: 2.5rem;
+  animation: flowerRotate 8s linear infinite;
+  pointer-events: none;
+}
+
+.f1 { top: 20%; left: 15%; }
+.f2 { top: 35%; right: 15%; animation-duration: 10s; animation-direction: reverse; }
+.f3 { bottom: 20%; left: 25%; animation-duration: 7s; }
+
+@keyframes flowerRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Scene 3: Stream & Wooden Bridge */
+.animated-stream {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 25vh;
+  background: linear-gradient(180deg, rgba(190, 234, 255, 0.5) 0%, rgba(136, 212, 158, 0.7) 100%);
+  overflow: hidden;
+}
+
+.stream-wave {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255, 255, 255, 0.3) 20px, rgba(255, 255, 255, 0.3) 40px);
+  animation: streamFlow 6s linear infinite;
+}
+
+@keyframes streamFlow {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-40px); }
+}
+
+.jumping-fish {
+  position: absolute;
+  bottom: 30px;
+  left: 45%;
+  font-size: 1.8rem;
+  animation: fishJump 4s ease-in-out infinite;
+}
+
+@keyframes fishJump {
+  0%, 80%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  90% { transform: translateY(-40px) rotate(-30deg); opacity: 1; }
+}
+
+/* Scene 4: Golden Grass */
+.golden-grass-layer {
+  position: absolute;
+  bottom: 0;
+  font-size: 2.2rem;
+  letter-spacing: 12px;
+  opacity: 0.7;
+}
+
+/* Cinematic Tower Reveal */
+.tower-silhouette-container {
+  position: relative;
+  font-size: 8rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.golden-light-ray {
+  position: absolute;
+  top: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 215, 0, 0.4) 0%, transparent 70%);
+  animation: pulseLight 3s ease-in-out infinite alternate;
+}
+
+@keyframes pulseLight {
+  0% { transform: translateX(-50%) scale(0.9); opacity: 0.5; }
+  100% { transform: translateX(-50%) scale(1.3); opacity: 1; }
+}
+
+.tower-reveal-card {
+  text-align: center;
+  max-width: 480px;
+  width: 90%;
+}

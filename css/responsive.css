@@ -1,0 +1,145 @@
+/* ==========================================================================
+   FRIENDSHIP DAY INTERACTIVE STORYTELLING EXPERIENCE
+   Awwwards-Quality Responsive System & Accessibility Optimizations
+   ========================================================================== */
+
+/* Tablet & Smaller Desktops (768px - 1024px) */
+@media (max-width: 1024px) {
+  .tower-world {
+    width: min(580px, 95vw);
+  }
+
+  .fantasy-tower {
+    width: 290px;
+  }
+}
+
+/* Mobile Devices (max-width: 768px) */
+@media (max-width: 768px) {
+  html {
+    font-size: 14px;
+  }
+
+  .speech {
+    padding: 24px 28px;
+    border-radius: 28px;
+  }
+
+  .speech h1 {
+    font-size: 30px;
+    min-height: 40px;
+  }
+
+  .speech p {
+    font-size: 17px;
+    min-height: 26px;
+  }
+
+  .glow-button {
+    padding: 15px 36px;
+    font-size: 17px;
+    min-height: 44px; /* Ensure 44px touch target */
+  }
+
+  .bamboo-nav {
+    left: 0.8rem;
+    top: 20%;
+    bottom: 20%;
+  }
+
+  .music-toggle-container {
+    top: 1.0rem;
+    right: 1.0rem;
+  }
+
+  .music-btn, .editor-nav-btn {
+    width: 44px;
+    height: 44px;
+    font-size: 1.1rem;
+  }
+
+  .tower-msg-card {
+    padding: 1.6rem 1.8rem;
+    max-width: 90vw;
+  }
+
+  .card-text {
+    font-size: 1.15rem;
+  }
+
+  .final-letter-card {
+    padding: 2.5rem 1.8rem;
+  }
+
+  .final-title-text {
+    font-size: 2.2rem;
+  }
+
+  .final-body-text {
+    font-size: 1.1rem;
+  }
+}
+
+/* Ultra Small Viewports (max-width: 480px) */
+@media (max-width: 480px) {
+  #panda-svg {
+    width: 200px;
+    height: 240px;
+  }
+
+  .speech h1 {
+    font-size: 25px;
+  }
+
+  .speech p {
+    font-size: 15px;
+  }
+
+  .bamboo-nav {
+    display: none; /* Hide vertical stalk on tiny mobile screens to maximize viewable space */
+  }
+
+  .night-moon {
+    font-size: 3.5rem;
+    top: 5%;
+    right: 5%;
+  }
+
+  .mission-complete-bubble {
+    font-size: 1.1rem;
+    padding: 0.6rem 1.4rem;
+  }
+}
+
+/* Accessibility: Reduced Motion Override (§11) */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .parallax-layer {
+    transform: none !important;
+  }
+
+  .particles-overlay, .lanterns-overlay {
+    opacity: 0.4;
+  }
+
+  .typewriter-text {
+    opacity: 1 !important;
+  }
+
+  .cursor-caret {
+    display: none !important;
+  }
+}
+
+/* Focus States for Keyboard Accessibility */
+button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 3px solid #FFD54F;
+  outline-offset: 3px;
+  border-radius: 8px;
+}
