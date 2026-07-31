@@ -1,6 +1,6 @@
 /**
- * Friendship Day Experience - Customization Editor Logic (Phase 6)
- * Manages form fields, localStorage sync, live modal preview, JSON export/import, and Base64 share link generation.
+ * Friendship Day Experience - Customization Editor Controller
+ * Handles form field bindings, localStorage sync, live modal preview, and JSON import/export.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,15 +25,12 @@ function populateFormFields() {
   setVal("pandaWelcome", CONFIG.pandaWelcome);
   setVal("pandaStory", CONFIG.pandaStory);
   setVal("buttonText", CONFIG.pandaButton);
+  setVal("continueButtonText", CONFIG.continueButtonText);
 
-  const advMsgs = CONFIG.adventureMessages || [
-    "Come with me... I have something special.",
-    "Some friendships... make every day brighter.",
-    "We've crossed many moments together."
-  ];
-  setVal("advMessage1", advMsgs[0] || "");
-  setVal("advMessage2", advMsgs[1] || "");
-  setVal("advMessage3", advMsgs[2] || "");
+  setVal("towerImage", CONFIG.towerImage || "assets/images/tower.svg");
+  setVal("girlImage", CONFIG.girlImage || "assets/images/girl.svg");
+  setVal("hairImage", CONFIG.hairImage || "assets/images/hair.svg");
+  setVal("backgroundImage", CONFIG.backgroundImage || "assets/images/mountains.svg");
 
   const towerMsgs = CONFIG.towerMessages || [
     "Some friendships begin quietly.",
@@ -75,12 +72,12 @@ function handleSave(e) {
     pandaWelcome: getVal("pandaWelcome"),
     pandaStory: getVal("pandaStory"),
     pandaButton: getVal("buttonText"),
+    continueButtonText: getVal("continueButtonText"),
 
-    adventureMessages: [
-      getVal("advMessage1"),
-      getVal("advMessage2"),
-      getVal("advMessage3")
-    ],
+    towerImage: getVal("towerImage"),
+    girlImage: getVal("girlImage"),
+    hairImage: getVal("hairImage"),
+    backgroundImage: getVal("backgroundImage"),
 
     towerMessages: [
       getVal("towerMessage1"),

@@ -130,7 +130,6 @@
       transform: translateY(-2px);
     }
 
-    /* Modal Live Preview */
     .modal-overlay {
       position: fixed;
       inset: 0;
@@ -195,7 +194,7 @@
 
     <form id="editor-form">
 
-      <!-- 1. Friend & Panda Intro -->
+      <!-- 1. General & Panda Intro -->
       <h3 class="section-heading">1. General & Panda Welcome</h3>
       
       <div class="form-group">
@@ -214,25 +213,31 @@
       </div>
 
       <div class="form-group">
-        <label for="buttonText">CTA Button Text</label>
+        <label for="buttonText">Panda CTA Button Text</label>
         <input type="text" id="buttonText" class="form-control">
       </div>
 
-      <!-- 2. Adventure Messages -->
-      <h3 class="section-heading">2. Adventure Journey Messages</h3>
+      <div class="form-group">
+        <label for="continueButtonText">Tower Continue Button Text</label>
+        <input type="text" id="continueButtonText" class="form-control">
+      </div>
 
-      <div class="form-group"><label for="advMessage1">Adventure Message 1 (Bamboo Forest)</label><input type="text" id="advMessage1" class="form-control"></div>
-      <div class="form-group"><label for="advMessage2">Adventure Message 2 (Flower Garden)</label><input type="text" id="advMessage2" class="form-control"></div>
-      <div class="form-group"><label for="advMessage3">Adventure Message 3 (Wooden Bridge)</label><input type="text" id="advMessage3" class="form-control"></div>
+      <!-- 2. Tower & Image Assets -->
+      <h3 class="section-heading">2. Tower & Image Assets</h3>
+
+      <div class="form-group"><label for="towerImage">Tower Image Path</label><input type="text" id="towerImage" class="form-control"></div>
+      <div class="form-group"><label for="girlImage">Girl Image Path</label><input type="text" id="girlImage" class="form-control"></div>
+      <div class="form-group"><label for="hairImage">Hair Image Path</label><input type="text" id="hairImage" class="form-control"></div>
+      <div class="form-group"><label for="backgroundImage">Background Image Path</label><input type="text" id="backgroundImage" class="form-control"></div>
 
       <!-- 3. Tower Messages -->
       <h3 class="section-heading">3. Tower Climb Messages (5 Cards)</h3>
 
-      <div class="form-group"><label for="towerMessage1">Tower Message 1</label><input type="text" id="towerMessage1" class="form-control"></div>
-      <div class="form-group"><label for="towerMessage2">Tower Message 2</label><input type="text" id="towerMessage2" class="form-control"></div>
-      <div class="form-group"><label for="towerMessage3">Tower Message 3</label><input type="text" id="towerMessage3" class="form-control"></div>
-      <div class="form-group"><label for="towerMessage4">Tower Message 4</label><input type="text" id="towerMessage4" class="form-control"></div>
-      <div class="form-group"><label for="towerMessage5">Tower Message 5</label><input type="text" id="towerMessage5" class="form-control"></div>
+      <div class="form-group"><label for="towerMessage1">Tower Message 1 (15%)</label><input type="text" id="towerMessage1" class="form-control"></div>
+      <div class="form-group"><label for="towerMessage2">Tower Message 2 (30%)</label><input type="text" id="towerMessage2" class="form-control"></div>
+      <div class="form-group"><label for="towerMessage3">Tower Message 3 (45%)</label><input type="text" id="towerMessage3" class="form-control"></div>
+      <div class="form-group"><label for="towerMessage4">Tower Message 4 (60%)</label><input type="text" id="towerMessage4" class="form-control"></div>
+      <div class="form-group"><label for="towerMessage5">Tower Message 5 (80%)</label><input type="text" id="towerMessage5" class="form-control"></div>
 
       <!-- 4. Final Title & Letter -->
       <h3 class="section-heading">4. Final Letter & Theme Settings</h3>
@@ -260,7 +265,7 @@
         <label for="music" style="margin:0;">Enable Fairytale Music</label>
       </div>
 
-      <!-- Required Buttons: Preview, Save, Reset, Export JSON, Import JSON -->
+      <!-- Buttons -->
       <div class="editor-actions-row">
         <button id="save-btn" type="button" class="btn-primary">Save 💾</button>
         <button id="preview-btn" type="button" class="btn-secondary">Preview 👁️</button>

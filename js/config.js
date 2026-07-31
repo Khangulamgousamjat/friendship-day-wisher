@@ -1,6 +1,6 @@
 /**
- * Friendship Day Experience - Configuration System
- * Automatically loads saved configuration from localStorage, Base64 URL params, or DEFAULT_CONFIG.
+ * Friendship Day Experience - Central Configuration System
+ * Single source of truth for all copy, image paths, button text, and theme settings.
  */
 
 const DEFAULT_CONFIG = {
@@ -8,6 +8,7 @@ const DEFAULT_CONFIG = {
   pandaWelcome: "Happy Friendship Day!",
   pandaStory: "I found a magical adventure just for you.",
   pandaButton: "Let's Go Together",
+  continueButtonText: "Continue the Adventure 🏰",
 
   adventureMessages: [
     "Come with me... I have something special.",
@@ -24,14 +25,18 @@ const DEFAULT_CONFIG = {
   ],
 
   finalTitle: "Happy Friendship Day ❤️",
-  finalMessage: "Thank you for being one of my favorite people.",
+  finalMessage: "Thank you for being one of my favorite people. Every moment spent together is a gift, and I am so grateful to have you in my life.",
+
+  towerImage: "assets/images/tower.svg",
+  girlImage: "assets/images/girl.svg",
+  hairImage: "assets/images/hair.svg",
+  backgroundImage: "assets/images/mountains.svg",
 
   theme: "golden",
   music: true,
   lanternCount: 120
 };
 
-// Safe HTML sanitizer helper
 function sanitizeText(str) {
   if (typeof str !== "string") return "";
   return str
@@ -42,11 +47,9 @@ function sanitizeText(str) {
     .replace(/'/g, "&#039;");
 }
 
-// Deep load configuration from URL, localStorage, or Defaults
 function loadConfig() {
   let merged = { ...DEFAULT_CONFIG };
 
-  // 1. Load from localStorage ("friendshipDayConfig")
   try {
     const localData = localStorage.getItem("friendshipDayConfig");
     if (localData) {
@@ -57,7 +60,6 @@ function loadConfig() {
     console.warn("Could not read localStorage config:", e);
   }
 
-  // 2. Load from Base64 URL parameter ?data=
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const dataParam = urlParams.get("data");
@@ -73,10 +75,8 @@ function loadConfig() {
   return merged;
 }
 
-// Current runtime CONFIG object loaded automatically
 const CONFIG = loadConfig();
 
-// Save new configuration to localStorage
 function saveConfig(newConfig) {
   try {
     Object.assign(CONFIG, newConfig);
@@ -88,7 +88,6 @@ function saveConfig(newConfig) {
   }
 }
 
-// Reset configuration back to defaults
 function resetConfig() {
   try {
     localStorage.removeItem("friendshipDayConfig");

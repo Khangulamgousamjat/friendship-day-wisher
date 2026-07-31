@@ -1,10 +1,10 @@
 /**
- * Friendship Day Experience - Main Orchestrator (Phase 5)
- * Manages preloader timeline, typewriter text effect, sound controls, tower climb, final letter, and replay button.
+ * Friendship Day Experience - Main Orchestrator
+ * Manages preloader sequence, typewriter text, continue button with fade-to-black transition, audio, and replay.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1. Instantiate Controllers & expose globally
+  // 1. Instantiate Controllers
   window.pandaInstance = new PandaController();
   window.towerInstance = new TowerController();
 
@@ -17,14 +17,13 @@ document.addEventListener("DOMContentLoaded", () => {
   // 4. Audio Controller Binding
   initAudioControls();
 
-  // 5. Preloader Timeline & Entrance Orchestration
+  // 5. Preloader Timeline & Sequence Orchestration
   initPreloaderSequence(window.pandaInstance);
 
   // 6. Replay Adventure Button Binding
   initReplayButton();
 });
 
-// Apply Final Title & Message from CONFIG
 function applyConfigToFinalLetter() {
   const titleEl = document.getElementById("ui-final-title");
   const msgEl = document.getElementById("ui-final-message");
@@ -33,7 +32,6 @@ function applyConfigToFinalLetter() {
   if (msgEl) msgEl.textContent = CONFIG.finalMessage || "Thank you for being one of my favorite people.";
 }
 
-// Typewriter Text Effect (~35ms / character)
 function runTypewriter(elementId, text, speed = 35, callback) {
   const container = document.getElementById(elementId);
   if (!container) return;
@@ -57,7 +55,6 @@ function runTypewriter(elementId, text, speed = 35, callback) {
   }, speed);
 }
 
-// Mouse Movement Parallax System
 function initMouseParallax() {
   const layers = document.querySelectorAll(".parallax-layer");
   if (layers.length === 0) return;
@@ -77,12 +74,10 @@ function initMouseParallax() {
   });
 }
 
-// Audio Toggle Button
 function initAudioControls() {
   const btn = document.getElementById("music-toggle-btn");
   if (!btn) return;
 
-  // Restore icon state from stored preference
   if (typeof soundManager !== "undefined") {
     btn.textContent = soundManager.isMuted ? "🔇" : "🎵";
   }
@@ -95,15 +90,19 @@ function initAudioControls() {
   });
 }
 
-// Preloader & Panda Entrance Sequence
 function initPreloaderSequence(panda) {
   const loader = document.getElementById("loading");
   const pandaWorld = document.getElementById("panda-world");
   const ctaBtn = document.getElementById("startAdventure");
   const continueBtn = document.getElementById("continue-tower-btn");
+  const fadeOverlay = document.getElementById("fade-black-overlay");
 
   if (ctaBtn) {
     ctaBtn.textContent = CONFIG.pandaButton || "Let's Go Together";
+  }
+
+  if (continueBtn) {
+    continueBtn.textContent = CONFIG.continueButtonText || "Continue the Adventure 🏰";
   }
 
   // Preloader fill timeline (~2.5s)
@@ -117,10 +116,8 @@ function initPreloaderSequence(panda) {
           loader.style.display = "none";
           if (pandaWorld) pandaWorld.classList.remove("hidden");
 
-          // Trigger Panda Bounce Entrance
           panda.animateEntrance();
 
-          // Trigger Speech Typewriter Sequence
           runTypewriter("welcomeText", CONFIG.pandaWelcome || "Happy Friendship Day!", 40, () => {
             runTypewriter("storyText", CONFIG.pandaStory || "I found a magical adventure just for you.", 30);
           });
@@ -129,7 +126,7 @@ function initPreloaderSequence(panda) {
     }
   }, 2500);
 
-  // CTA Button Click Transition to Adventure Path
+  // Panda CTA Click -> Scroll to Forest
   if (ctaBtn) {
     ctaBtn.addEventListener("click", () => {
       if (typeof soundManager !== "undefined") {
@@ -145,18 +142,30 @@ function initPreloaderSequence(panda) {
     });
   }
 
-  // Tower Reveal Continue Button -> Smooth Scroll to Tower Climb
+  // Tower Reveal Continue Button -> Fade Screen to Black & Start Tower
   if (continueBtn) {
     continueBtn.addEventListener("click", () => {
       if (typeof soundManager !== "undefined") soundManager.playSparkleSFX();
-      if (typeof scrollController !== "undefined") {
-        scrollController.scrollTo("#section-tower", { duration: 1.8 });
+
+      if (fadeOverlay) {
+        fadeOverlay.style.opacity = "1";
+        setTimeout(() => {
+          if (typeof scrollController !== "undefined") {
+            scrollController.scrollTo("#section-tower", { duration: 0.1 });
+          }
+          setTimeout(() => {
+            fadeOverlay.style.opacity = "0";
+          }, 300);
+        }, 800);
+      } else {
+        if (typeof scrollController !== "undefined") {
+          scrollController.scrollTo("#section-tower", { duration: 1.8 });
+        }
       }
     });
   }
 }
 
-// Replay Adventure Button
 function initReplayButton() {
   const replayBtn = document.getElementById("replay-adventure-btn");
   if (replayBtn) {

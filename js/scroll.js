@@ -1,6 +1,6 @@
 /**
- * Friendship Day Experience - Message Reveal System (Phase 4 Focus)
- * Manages scroll-linked threshold reveals ensuring ONLY ONE message card is visible at a time.
+ * Friendship Day Experience - Camera Climb & Message Reveal Integration
+ * Manages scroll climb starting at the BOTTOM of the 3500px tower, translating upward as user scrolls down.
  */
 
 class ScrollController {
@@ -51,7 +51,7 @@ class ScrollController {
     const skyBg = document.getElementById("sky-sweep-bg");
     const fillBar = document.getElementById("bamboo-nav-fill");
 
-    // 1. Overall Progress Sweep
+    // 1. Overall Progress & Background Sky Sweep
     ScrollTrigger.create({
       trigger: "body",
       start: "top top",
@@ -59,7 +59,6 @@ class ScrollController {
       scrub: 0.5,
       onUpdate: (self) => {
         const p = self.progress;
-
         if (fillBar) fillBar.style.height = `${p * 100}%`;
 
         if (skyBg) {
@@ -78,7 +77,7 @@ class ScrollController {
       }
     });
 
-    // 2. Tower Camera Climb (~450vh)
+    // 2. Camera Climb: Starts at BOTTOM of tower, translates UP as user scrolls DOWN
     const cameraWorld = document.getElementById("tower-camera-world");
     ScrollTrigger.create({
       trigger: "#section-tower",
@@ -89,19 +88,24 @@ class ScrollController {
         const p = self.progress;
 
         if (cameraWorld) {
-          const maxTranslate = 800;
+          const maxTranslate = 2700; // Translates 2700px upward along 3500px tower
           gsap.set(cameraWorld, { y: p * maxTranslate });
+        }
+
+        // At 100% summit, reveal Girl on balcony
+        if (p > 0.90 && window.towerInstance) {
+          window.towerInstance.revealGirlAtSummit();
         }
       }
     });
 
-    // 3. Message Reveal System: 5 Floating Glass Cards (ONLY ONE VISIBLE AT A TIME)
+    // 3. 5 Message Cards Reveal Ranges (ONLY ONE VISIBLE AT A TIME)
     const msgRanges = [
-      { start: 0.16, end: 0.30 }, // Card 01
-      { start: 0.33, end: 0.47 }, // Card 02
-      { start: 0.50, end: 0.64 }, // Card 03
-      { start: 0.67, end: 0.81 }, // Card 04
-      { start: 0.84, end: 0.96 }  // Card 05
+      { start: 0.12, end: 0.26 }, // Message 1 (15%)
+      { start: 0.27, end: 0.42 }, // Message 2 (30%)
+      { start: 0.43, end: 0.57 }, // Message 3 (45%)
+      { start: 0.58, end: 0.73 }, // Message 4 (60%)
+      { start: 0.74, end: 0.89 }  // Message 5 (80%)
     ];
 
     ScrollTrigger.create({
@@ -111,7 +115,6 @@ class ScrollController {
       onUpdate: (self) => {
         const p = self.progress;
 
-        // Find currently active card index (if any)
         let activeIdx = -1;
         msgRanges.forEach((range, i) => {
           if (p >= range.start && p < range.end) {
@@ -119,7 +122,6 @@ class ScrollController {
           }
         });
 
-        // Strictly update visibility so ONLY ONE card is visible at a time
         for (let i = 0; i < 5; i++) {
           const card = document.getElementById(`tower-card-${i}`);
           if (!card) continue;

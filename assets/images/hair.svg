@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 2800" width="240" height="2800" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="hairGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF8D6"/>
+      <stop offset="50%" stop-color="#FFD54F"/>
+      <stop offset="100%" stop-color="#FF9E00"/>
+    </linearGradient>
+    <filter id="hairGlowFilter">
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#FFD86B" flood-opacity="0.85"/>
+    </filter>
+  </defs>
+
+  <g id="magical-hair-braid" filter="url(#hairGlowFilter)">
+    ${Array.from({ length: 32 }).map((_, i) => `
+      <g transform-origin="120 ${80 + i * 85}">
+        <path d="M 120 ${80 + i * 85} Q ${132 + (i % 2 === 0 ? 22 : -22)} ${122 + i * 85} 120 ${165 + i * 85}" stroke="url(#hairGold)" stroke-width="16" stroke-linecap="round" fill="none"/>
+        <circle cx="${120 + (i % 2 === 0 ? 16 : -16)}" cy="${122 + i * 85}" r="8" fill="${i % 3 === 0 ? '#FFB7C5' : (i % 3 === 1 ? '#DCCBFF' : '#FFD54F')}"/>
+        <circle cx="${120 + (i % 2 === 0 ? 16 : -16)}" cy="${122 + i * 85}" r="3" fill="#FFFFFF"/>
+      </g>
+    `).join('')}
+  </g>
+</svg>
