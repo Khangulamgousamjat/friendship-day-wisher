@@ -38,7 +38,7 @@
   <a href="editor.html" class="editor-nav-btn" title="Customize Messages">🛠️</a>
 </div>
 
-<!-- Vertical Bamboo Progress Stalk -->
+<!-- Vertical Bamboo Progress Stalk Navigation -->
 <div id="bamboo-progress-nav" class="bamboo-nav">
   <div id="bamboo-nav-fill" class="bamboo-nav-fill"></div>
   <div class="bamboo-nav-node node-1 active" data-scene="forest">🌿</div>
@@ -60,7 +60,7 @@
 <!-- MAIN EXPERIENCE CONTAINER -->
 <main id="main-experience">
 
-  <!-- PANDA WORLD LANDING (Phase 2) -->
+  <!-- PANDA WORLD LANDING PAGE (Phase 2) -->
   <section id="panda-world" class="hidden">
     <div class="cloud cloud1"></div>
     <div class="cloud cloud2"></div>
@@ -107,29 +107,34 @@
     </div>
   </section>
 
-  <!-- SCENE 1: BAMBOO FOREST (Morning) -->
+  <!-- SCENE 1: BAMBOO FOREST 🌲 -->
   <section id="scene-forest" class="adventure-scene">
+    <div class="bamboo-forest-bg">
+      <div class="bamboo-stalk">🎋</div>
+      <div class="bamboo-stalk">🎋</div>
+      <div class="bamboo-stalk">🎋</div>
+    </div>
     <div class="mini-message-card glass-card">
       <p class="mini-msg-text">Come with me...<br><strong>I have something special.</strong></p>
       <button class="glow-button scene-continue-btn" data-target="#scene-garden">Continue 🌸</button>
     </div>
   </section>
 
-  <!-- SCENE 2: FLOWER GARDEN (Late Morning) -->
+  <!-- SCENE 2: FLOWER GARDEN 🌸 -->
   <section id="scene-garden" class="adventure-scene">
     <div class="rotating-flower f1">🌸</div>
     <div class="rotating-flower f2">🌼</div>
     <div class="rotating-flower f3">🌺</div>
+    <div class="flower-garden-field">🌸 🌺 🌼 🌸 🌺 🌼</div>
     <div class="mini-message-card glass-card">
       <p class="mini-msg-text">Some friendships...<br><strong>make every day brighter.</strong></p>
       <button class="glow-button scene-continue-btn" data-target="#scene-bridge">Continue 🌉</button>
     </div>
   </section>
 
-  <!-- SCENE 3: WOODEN BRIDGE (Golden Hour Stream) -->
+  <!-- SCENE 3: WOODEN BRIDGE & STREAM 🌉 -->
   <section id="scene-bridge" class="adventure-scene">
     <div class="animated-stream">
-      <div class="stream-wave"></div>
       <div class="jumping-fish">🐟</div>
     </div>
     <div class="mini-message-card glass-card">
@@ -138,17 +143,18 @@
     </div>
   </section>
 
-  <!-- SCENE 4: MAGICAL MEADOW (Sunset Glow) -->
+  <!-- SCENE 4: MAGICAL MEADOW 🌼 -->
   <section id="scene-meadow" class="adventure-scene">
-    <div class="golden-grass-layer">🌾 🌾 🌾</div>
+    <div class="golden-grass-layer">🌾 🌾 🌾 🌾 🌾</div>
     <div class="mini-message-card glass-card">
       <p class="mini-msg-text">The best part<br><strong>is still waiting.</strong></p>
       <button class="glow-button scene-continue-btn" data-target="#scene-cloud">Continue ☁️</button>
     </div>
   </section>
 
-  <!-- SCENE 5: CLOUD VALLEY (Purple Dusk) -->
+  <!-- SCENE 5: CLOUD VALLEY ☁️ -->
   <section id="scene-cloud" class="adventure-scene">
+    <div class="cloud-valley-mountains"></div>
     <div class="mini-message-card glass-card">
       <p class="mini-msg-text">We're almost there...</p>
       <button class="glow-button scene-continue-btn" data-target="#scene-tower-reveal">Continue 🏰</button>
@@ -161,9 +167,9 @@
       <div class="golden-light-ray"></div>
       <div class="tower-silhouette">🏰</div>
     </div>
-    <div class="tower-reveal-card glass-card">
-      <h3 style="font-family:'Fredoka', sans-serif; font-size:1.8rem; color:#FFD54F; margin-bottom:0.8rem;">I have one more surprise waiting for you...</h3>
-      <button id="continue-tower-btn" class="glow-button scene-continue-btn" style="margin-top:1rem;"></button>
+    <div class="tower-reveal-card glass-card" style="padding:2.8rem 3rem;">
+      <h3 style="font-family:'Fredoka', cursive, sans-serif; font-size:2.0rem; color:#FFD54F; margin-bottom:0.8rem;">I have one more surprise waiting for you...</h3>
+      <button id="continue-tower-btn" class="glow-button scene-continue-btn" style="margin-top:1.2rem;"></button>
     </div>
   </section>
 
@@ -180,7 +186,7 @@
     <div id="final-letter-card" class="final-letter-card">
       <h2 id="ui-final-title" class="final-title-text">Happy Friendship Day ❤️</h2>
       <p id="ui-final-message" class="final-body-text">Thank you for being one of my favorite people. Every moment spent together is a gift, and I am so grateful to have you in my life.</p>
-      <button class="glow-button scene-continue-btn" data-target="#section-lantern-festival" style="margin-top:1.5rem;">Continue to Lantern Festival 🏮</button>
+      <button class="glow-button scene-continue-btn" data-target="#section-lantern-festival" style="margin-top:1.8rem;">Continue to Lantern Festival 🏮</button>
     </div>
   </section>
 
@@ -188,7 +194,7 @@
   <section id="section-lantern-festival" class="adventure-scene">
     <div class="night-moon">🌙</div>
 
-    <!-- Memory Timeline Cards -->
+    <!-- Sequential Memory Timeline Cards -->
     <div class="memory-timeline-container">
       <div class="memory-card m1 glass-card">✨ Thank you for every laugh.</div>
       <div class="memory-card m2 glass-card">✨ For always being there.</div>

@@ -1,6 +1,7 @@
 /**
  * Friendship Day Experience - Camera Climb & Message Reveal Integration
  * Manages scroll climb starting at the BOTTOM of the 3500px tower, translating upward as user scrolls down.
+ * Enforces strictly ONE tower message visible at a time, and sequential finale memory card reveals.
  */
 
 class ScrollController {
@@ -99,7 +100,7 @@ class ScrollController {
       }
     });
 
-    // 3. 5 Message Cards Reveal Ranges (ONLY ONE VISIBLE AT A TIME)
+    // 3. 5 Message Cards Reveal Ranges (STRICTLY ONE VISIBLE AT A TIME)
     const msgRanges = [
       { start: 0.12, end: 0.26 }, // Message 1 (15%)
       { start: 0.27, end: 0.42 }, // Message 2 (30%)
@@ -138,6 +139,27 @@ class ScrollController {
       }
     });
 
+    // 4. Finale Lantern Festival Trigger: Sequential Memory Card Reveals (One by One)
+    ScrollTrigger.create({
+      trigger: "#section-lantern-festival",
+      start: "top center",
+      onEnter: () => {
+        if (window.lanternEngine) window.lanternEngine.startFestival();
+        if (typeof soundManager !== "undefined") soundManager.setEnvironment("finale");
+
+        const m1 = document.querySelector(".memory-card.m1");
+        const m2 = document.querySelector(".memory-card.m2");
+        const m3 = document.querySelector(".memory-card.m3");
+        const replayBtn = document.getElementById("replay-adventure-btn");
+
+        // Sequential one-by-one reveals with 2.2s delays
+        setTimeout(() => m1 && m1.classList.add("visible"), 800);
+        setTimeout(() => m2 && m2.classList.add("visible"), 3000);
+        setTimeout(() => m3 && m3.classList.add("visible"), 5200);
+        setTimeout(() => replayBtn && replayBtn.classList.add("visible"), 7400);
+      }
+    });
+
     // Environmental Checkpoints
     const checkEnvironment = (env, selector, nodeIndex) => {
       ScrollTrigger.create({
@@ -155,6 +177,7 @@ class ScrollController {
     checkEnvironment("meadow", "#scene-meadow", 3);
     checkEnvironment("cloud", "#scene-cloud", 4);
     checkEnvironment("tower", "#section-tower", 5);
+    checkEnvironment("finale", "#section-lantern-festival", 6);
   }
 
   applyEnvironment(env, nodeIndex) {
@@ -168,7 +191,7 @@ class ScrollController {
     if (typeof soundManager !== "undefined") soundManager.setEnvironment(env);
 
     if (window.pandaInstance) {
-      if (env === "tower") {
+      if (env === "tower" || env === "finale") {
         window.pandaInstance.sitDown();
       } else {
         window.pandaInstance.startWalkCycle();
