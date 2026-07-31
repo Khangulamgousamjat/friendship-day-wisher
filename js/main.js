@@ -1,6 +1,6 @@
 /**
  * Friendship Day Experience - Main Orchestrator
- * Manages preloader sequence, typewriter text, continue button with fade-to-black transition, audio, and replay.
+ * Manages preloader sequence, typewriter text, continue buttons, audio controls, and replay.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -20,7 +20,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // 5. Preloader Timeline & Sequence Orchestration
   initPreloaderSequence(window.pandaInstance);
 
-  // 6. Replay Adventure Button Binding
+  // 6. Bind All Scene Continue Buttons
+  initSceneContinueButtons();
+
+  // 7. Replay Adventure Button Binding
   initReplayButton();
 });
 
@@ -164,6 +167,22 @@ function initPreloaderSequence(panda) {
       }
     });
   }
+}
+
+// Bind all scene Continue buttons to scroll smoothly to their target
+function initSceneContinueButtons() {
+  const buttons = document.querySelectorAll(".scene-continue-btn");
+  buttons.forEach(btn => {
+    const target = btn.getAttribute("data-target");
+    if (!target) return;
+
+    btn.addEventListener("click", () => {
+      if (typeof soundManager !== "undefined") soundManager.playSparkleSFX();
+      if (typeof scrollController !== "undefined") {
+        scrollController.scrollTo(target, { duration: 1.8 });
+      }
+    });
+  });
 }
 
 function initReplayButton() {
