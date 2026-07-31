@@ -114,7 +114,6 @@
   <button class="glow-button" id="replayBtn">🌿 Replay Adventure</button>
 </div>
 
-<script src="js/config.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
@@ -127,7 +126,7 @@
       overlay.style.pointerEvents = "all";
       overlay.style.opacity = "1";
       setTimeout(() => {
-        window.location.href = "loading.html";
+        window.location.href = "index.html";
       }, 2000);
     });
 
@@ -145,7 +144,7 @@
 
     const lanterns = [];
     const stars = [];
-    const numLanterns = CONFIG.lanternCount || 80;
+    const numLanterns = 120;
 
     // Init Stars
     for(let i=0; i<150; i++) {

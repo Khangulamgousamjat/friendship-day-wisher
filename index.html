@@ -173,17 +173,11 @@ Har dua mein tera naam rahe."</div>
   <button class="glow-button" id="lanternBtn">Experience Lantern Festival 🏮</button>
 </div>
 
-<script src="js/config.js"></script>
 <script>
   document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => {
       document.getElementById("fade-black-overlay").style.opacity = "0";
     }, 100);
-
-    // Apply Config
-    if (CONFIG.finalTitle) document.getElementById("titleText").textContent = CONFIG.finalTitle;
-    if (CONFIG.finalMessage) document.getElementById("messageText").textContent = CONFIG.finalMessage;
-    if (CONFIG.shayariText) document.getElementById("shayariText").textContent = CONFIG.shayariText;
 
     document.getElementById("lanternBtn").addEventListener("click", () => {
       const overlay = document.getElementById("fade-black-overlay");
